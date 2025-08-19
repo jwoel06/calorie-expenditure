@@ -24,7 +24,7 @@ class CaloriePredictor:
         df_clean = df.copy()
         
         # Drop unnecessary columns
-        columns_to_drop = ['id']
+        columns_to_drop = ['id', 'Age', 'Height', 'Weight']
         df_clean.drop(columns_to_drop, axis=1, inplace=True, errors='ignore')
         
         if 'Sex' in df_clean.columns:

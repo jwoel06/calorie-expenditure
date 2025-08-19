@@ -73,7 +73,7 @@ const Register = () => {
           setAgreeTerms(false);
 
           setTimeout(()=> {
-            navigate('/confirmation');
+            navigate('/confirmation', {replace: true});
           }, 2000);
         }
       }

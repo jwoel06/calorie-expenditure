@@ -20,7 +20,7 @@ const ConfirmEmail = () => {
         if (pendingEmail) {
             setEmail(pendingEmail);
         } else {
-            navigate('register')
+            navigate('/register', {replace: true})
         }
 
         //See if user is confirmed
@@ -80,7 +80,7 @@ const ConfirmEmail = () => {
             setMessage('Emailed confirmed successfull! Redirecting....')
 
             setTimeout(() => {
-                navigate('/survey')
+                navigate('/survey', {replace: true})
             }, 1000)
         } catch (err) {
             console.error("Error in creating proifle, ", err)
@@ -113,7 +113,7 @@ const ConfirmEmail = () => {
     };
   const handleChangeEmail = () => {
     localStorage.removeItem('pendingEmail');
-    navigate('/register');
+    navigate('/register', {replace: true});
   };
 
   return (
@@ -187,7 +187,7 @@ const ConfirmEmail = () => {
           
           <button 
             className="btn-link"
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/login', {replace: true})}
           >
             Go to Login
           </button>

@@ -3,17 +3,19 @@ import './Login.css'
 import {useState, useEffect} from "react";
 import {useAuth} from "../hooks/useAuth";
 import {supabase} from "../lib/supabase";
-import {useNavigation} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const { login } = useAuth()
-  const navigate = useNavigation();
+  const { signIn } = useAuth()
+  
+  const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault(); 
@@ -21,7 +23,14 @@ const Login = () => {
     setError(null);
 
     try {
-      await login(email, password, rememberMe);
+      const { data: error} = await signIn(email, password, rememberMe);
+      if (!error) {
+        setSuccess('Successful Login, Redirecting....')
+        setTimeout(() => {
+          navigate('/')
+        }, 2000);
+      }
+
 
     } catch (err) {
       setError(err.message || 'Login Failed. Please try again');
@@ -42,11 +51,8 @@ const Login = () => {
         
         <div id="login-items" className="login-items">
           <form onSubmit={handleClick}>
-            {error && (
-              <div className="error-message" role="alert">
-                {error}
-              </div>
-            )}
+          {error && <div className="error-message" style={{color: 'red', marginBottom: '10px'}}>{error}</div>}
+          {success && <div className="success-message" style={{color: 'green', marginBottom: '10px'}}>{success}</div>}
             
             <div className="form-field">
               <label htmlFor='email'>Email</label>
